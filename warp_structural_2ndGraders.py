@@ -41,7 +41,6 @@ os.system(command)
 
 #Warp and Reorient the diffusion tensor:
 images_to_warp = []
-<<<<<<< HEAD
 images_to_warp.append(subj_proc_path+ 'DF' + subject_id + '_T1_biasCorrected.nii.gz') #T1 data
 
 output_warp_images = []
@@ -50,20 +49,10 @@ output_warp_images.append(norm_data_dir+'warped.nii.gz')
 tmp_img = norm_data_dir + 'tmp.nii.gz'
 
 
-=======
-images_to_warp.append(subj_proc_path+ 'DF' + subject_id + '_T1_biasCorrected') #T1 data
-
-output_warp_images = []
-output_warp_images.append(norm_data_dir+'sMRI_T1.nii.gz')
-
-tmp_img = norm_data_dir + 'tmp.nii.gz'
-
->>>>>>> 555ef0ab83b878d61bc52a71343cc822194cfd3d
 for i in range(0, len(images_to_warp)):
     input_img = images_to_warp[i]
     output_img = output_warp_images[i]
 
-<<<<<<< HEAD
     command = 'SVAdjustVoxelspace -in ' + input_img + ' -out ' + tmp_img + ' -origin 0 0 0'
     os.system(command)
 
@@ -72,26 +61,7 @@ for i in range(0, len(images_to_warp)):
 
 JacobDet = norm_data_dir + subject_id
 combined_template_mask = '/study/devfracs/sMRI/Yr1/Templates/combined/Combined_template_mask.nii.gz'
-command = 'ANTSJacobian 3 ' + output_img + ' ' + JacobDet + ' ' + combined_template_mask + ' 1 1x10 > log.txt '
+command = 'ANTSJacobian 3 ' + output_img + ' ' + JacobDet + ' ' + combined_template_mask + ' 1 1x10 > log.txt'
 os.system(command)
-=======
-    if i == 0:
-        command = 'TVAdjustVoxelspace -in ' + input_img + ' -out ' + tmp_img + ' -origin 0 0 0'
-    	os.system(command)
-    else:
-        command = 'SVAdjustVoxelspace -in ' + input_img + ' -out ' + tmp_img + ' -origin 0 0 0'
-    	os.system(command)
-
-    command = 'antsApplyTransforms -d 3 '
-
-    if i == 0:
-        command += '-e 2 '
-    else:
-        command += '-e 0 '
-
-    command += '-r ' + combined_template + ' -i ' + tmp_img + ' -o ' + output_img + ' -t ' + combined_warp
-    os.system(command)
-
->>>>>>> 555ef0ab83b878d61bc52a71343cc822194cfd3d
 
 os.system('rm -rf ' + tmp_img)
